@@ -1,4 +1,5 @@
-# Sustainability_Cell_IITB_Website
+# Sustainability Cell IITB 
+This repo is for version control of the cell's website and for trying our new ideas
 
 
 
