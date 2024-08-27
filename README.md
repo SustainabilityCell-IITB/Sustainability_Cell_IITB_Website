@@ -17,4 +17,6 @@ This repo is for version control of the cell's website and for trying our new id
 
 [React Crash Course](https://www.youtube.com/watch?v=CgkZ7MvWUAA&t=2545s)
 
+[Deploying React website in github](https://www.geeksforgeeks.org/how-to-deploy-your-react-websites-on-github/)
+
 
