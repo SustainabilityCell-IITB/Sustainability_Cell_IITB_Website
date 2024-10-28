@@ -18,9 +18,36 @@ const newObserver = new IntersectionObserver((entry) =>{
 
 newObserver.observe(home);
 
+// ---------------------------
+// Annnoucements JS
+// ---------------------------
+
+let announce_button = document.querySelector(".announcement-button")
+let announce_close_button = document.querySelector(".close-button")
+let announce_section = document.querySelector(".announcement-section")
+let announce_container = document.querySelector(".announcement-container")
+
+announce_button.addEventListener('click', function(){
+    console.log(announce_section)
+    announce_section.style.visibility = "visible";
+    announce_section.style.opacity = '1';
+    announce_section.style.zIndex = '1';
+    announce_container.style.top = '0px'
+})
+
+announce_close_button.addEventListener('click', function(){
+    announce_section.style.opacity = '0';
+    announce_container.style.top = "-500px";
+    setTimeout(() => {
+        announce_section.style.zIndex = '-1';
+    }, 300);
+        
+})
+
+
 //  OLDER CODE FOR REFERENCE
 
-// // ..............Scroll Color Change Js
+// // ................Scroll Color Change Js
 
 // let scrolling = false;
 

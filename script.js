@@ -19,8 +19,9 @@
 
 
 
-// ......................................................
 
+
+// ...................Side Slide Animation
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
