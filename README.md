@@ -21,3 +21,5 @@ This repo is for version control of the cell's website and for trying our new id
 
 [Connecting HTML to a google sheet]([https://dev.to/kromate/connecting-your-html-forms-to-a-google-spreadsheet-p9h#:~:text=In%20this%20article,%20I%20would%20be%20teaching%20you%20how%20you](https://github.com/levinunnink/html-form-to-google-sheet))
 
+[Mobile applications using html css and js](https://docs.google.com/document/d/1MyMzQxWpbnQJosR2-N2XB5OFEjCHq5T5h6AVVavw9tk/edit?tab=t.0)
+
