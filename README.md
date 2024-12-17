@@ -19,5 +19,5 @@ This repo is for version control of the cell's website and for trying our new id
 
 [Deploying React website in github](https://www.geeksforgeeks.org/how-to-deploy-your-react-websites-on-github/)
 
-[Connecting HTML to a google sheet](https://dev.to/kromate/connecting-your-html-forms-to-a-google-spreadsheet-p9h#:~:text=In%20this%20article,%20I%20would%20be%20teaching%20you%20how%20you)
+[Connecting HTML to a google sheet]([https://dev.to/kromate/connecting-your-html-forms-to-a-google-spreadsheet-p9h#:~:text=In%20this%20article,%20I%20would%20be%20teaching%20you%20how%20you](https://github.com/levinunnink/html-form-to-google-sheet))
 
