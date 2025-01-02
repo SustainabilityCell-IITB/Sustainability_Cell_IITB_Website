@@ -109,16 +109,13 @@ body{
 }
 
 
-.announcement-button{
+.announcement-button {
     position: absolute;
-    top: 0px;
+    top: 8.5%;
     right: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 150px;
+    height: 50px;
     width: 50px;
-    box-shadow: none ;
+    cursor: pointer;
 }
 
 .announcement-button button{
@@ -143,44 +140,61 @@ body{
     width: 30px;
 }
 
-.announcement-section{
+.announcement-section {
     visibility: hidden;
-    display: flex;
-    z-index: 1;
-    justify-content: center;
-    align-items: center;
     position: absolute;
-    top: 0px;
-    opacity: 0.2;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.26);
-    transition: top 300ms ease-out, opacity 300ms ease-out;
-}
-.announcement-container{
-    backdrop-filter: blur(20px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    top: 20%; /* Positioned below the bell icon */
+    right: 2%; /* Leaves a 2% margin from screen edge */
     height: 70%;
-    width: 70%;
+    width: 40%; /* Occupies 30% of the screen width */
+    background-color: rgba(212, 248, 232, 0.9); /* Light green with transparency */
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px; /* Rounded edges */
+    z-index: 100;
+    overflow-y: auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.announcement-section.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.announcement-container {
+    position: relative;
+    height: 90%; /* Occupy the full height of the parent */
     padding: 20px;
     font-family: poppins;
     font-size: 20px;
     font-weight: 400;
-    background-color: rgba(245, 245, 245, 0.565);
-    border-radius: 20px 10px 10px 20px;
-    overflow-y: scroll;
-    
-    position: relative;
-    top: -500px;
-
-    transition: all 300ms ease-out;
+    display: flex; /* Enable Flexbox for alignment */
+    flex-direction: column; /* Stack content vertically */
+    overflow-y: auto;
+    border-radius: 15px; /* Matches the parent section for uniformity */
 }
 
-.announcement-container h2{
+.announcement-container h2 {
     color: #364226;
+    font-size: 24px;
+    margin-bottom: 10px;
+    position: relative;
+    padding: 0;
+    margin: 0;
 }
+
+.announcement-container h2::after {
+    content: "";
+    display: block;
+    width: calc(100% + 40px); /* Extend line beyond padding */
+    height: 2px;
+    background-color: #283E4F;
+    margin-top: 10px;
+    position: relative;
+    left: -20px;
+}
+
+
+
 /* .announcement-container br{
     color: black;
     border-color: black;
@@ -190,20 +204,12 @@ body{
 } */
 
 .announcement-container .close-button{
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    padding: 10px;
-    height: 40px;
-    width: 40px;
-    border: none;
-    background-color:transparent;
     position: absolute;
-    top: 20px;
-    right: 20px;
-    border-radius: 10px;
-
-    transition:all 200ms ease-in-out;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 .announcement-container .close-button:hover{
     background-color: rgba(255, 255, 255, 0.5);
@@ -211,24 +217,100 @@ body{
 }
 
 .announcement-container .close-button img{
-    height: 25px;
-    width: 25px;
+    height: 20px;
+    width: 20px;
 }
-.announcement-container::-webkit-scrollbar{
-    width: 15px;
-    position: absolute;
-    left: 100px;
-}
-.announcement-container::-webkit-scrollbar-thumb{
-    background-color: #283E4F;
-    width: 15px;
-    border-radius: 10px;
-}
-.announcement-container::-webkit-scrollbar-track{
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 10px 10px 10px 10px  
+.announcement-container::-webkit-scrollbar {
+    width: 8px;
 }
 
+.announcement-container::-webkit-scrollbar-thumb {
+    background-color: #283E4F;
+    border-radius: 5px;
+}
+
+.announcement-container::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.announcement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Space between announcements */
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%; /* Ensure consistent width */
+}
+  
+.announcement-left,
+.announcement-right {
+    padding: 10px;
+}
+  
+.announcement-left {
+    width: 20%; /* Occupy 25% of the total width */
+    text-align: center;
+    font-family: 'poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #283E4F;
+}
+  
+.vertical-line {
+    width: 2px;
+    height: 100%; /* Make it fully span the height of the content */
+    background-color: black; /* Ensure the color is visible */
+    margin: 0 10px; /* Add spacing around the line */
+}
+
+.announcement-right {
+    width: 80%; /* Occupy 75% of the total width */
+    font-family: 'poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+  
+.announcement-title {
+    font-weight: bold;
+    font-size: 18px;
+    color: #283E4F;
+  }
+  
+.announcement-right p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #283E4F;
+}
+
+.announcement-footer {
+  margin-top: auto;
+  text-align: center;
+}
+
+.announcement-footer hr {
+  width: calc(100% + 40px);
+  height: 2px;
+  background-color: #283E4F;
+  border: none;
+  position: relative;
+  left: -20px;
+}
+
+.announcement-footer p {
+  margin: 10px 0 0 0;
+  font-size: 18px;
+  color: #283E4F;
+  font-family: 'poppins', sans-serif;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+.announcement-footer p:hover {
+  color: #6BA6D2;
+}
 
 .announcement-info{
     background-color: rgba(255, 255, 255, 0.3);
@@ -333,9 +415,6 @@ body{
         height: auto;
     }   
 }
-
-
-
 
 @media screen and (max-width: 650px){
     .banner-box h1{
@@ -1568,3 +1647,134 @@ br{
     transition-property: transform;
     transition-timing-function: ease-out;
 }
+
+/* ..................Announcements for Mobile devices............ */
+@media screen and (max-width: 940px) {
+
+    .hamburger {
+        top: 10px; /* Ensure enough space */
+        right: 20px;
+      }
+    
+    .announcement-button {
+        top: 100px; /* Move the bell icon up */
+        right: 20px; /* Keep aligned with the hamburger icon */
+    }
+    
+    .announcement-section {
+        top: 100px; /* Adjusted for alignment with the moved bell icon */
+        right: 5%; /* Keep consistent margins */
+        width: 90%; /* Occupy most of the screen width */
+        height: 60%; /* Adjust height for smaller screens */
+        border-radius: 10px; /* Adjust radius for smaller screens */
+    }
+  
+    .announcement-container {
+      font-size: 16px; /* Slightly smaller font for better fit */
+      padding: 10px; /* Adjusted padding for compact layout */
+    }
+  
+    .announcement-container h2 {
+      font-size: 20px; /* Adjusted heading size */
+    }
+  
+    .announcement-container h2::after {
+      width: calc(100% + 20px); /* Reduced line width */
+      left: -10px; /* Adjusted position */
+    }
+  
+    .announcement-item {
+      flex-direction: column; /* Stack content vertically for better fit */
+      margin-bottom: 10px; /* Slightly increased spacing between items */
+      padding: 5px; /* Reduced padding */
+    }
+  
+    .announcement-left,
+    .announcement-right {
+      padding: 5px; /* Reduced padding for compactness */
+    }
+  
+    .announcement-left {
+      font-size: 14px; /* Reduced font size for better fit */
+    }
+  
+    .vertical-line {
+      height: 2px; /* Adjusted line thickness for smaller screens */
+      width: 80%; /* Make it span content width */
+      margin: 10px 0; /* Adjusted spacing */
+      align-self: center; /* Center line */
+    }
+  
+    .announcement-right {
+      font-size: 14px; /* Reduced font size */
+    }
+  
+    .announcement-title {
+      font-size: 16px; /* Adjusted title size */
+    }
+  
+    .announcement-footer {
+      margin-top: 10px; /* Adjusted spacing */
+    }
+  
+    .announcement-footer p {
+      font-size: 14px; /* Reduced font size */
+    }
+
+    .announcement-container .close-button {
+        z-index: 200; /* Ensure it’s higher than other elements */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    /* Further adjustments for very small screens */
+
+    .hamburger {
+        top: 10px; /* Keep compact layout */
+        right: 10px;
+      }
+    
+      .announcement-button {
+        top: 70px; /* Move the bell icon up further */
+        right: 10px; /* Align with the hamburger icon */
+      }
+    
+      .announcement-section {
+        top: 80px; /* Adjusted for alignment with the moved bell icon */
+        right: 5%; /* Consistent right margin */
+        width: 95%; /* Occupy most of the screen width */
+        height: 70%; /* Increase height for better usability */
+        border-radius: 10px; /* Maintain rounded corners */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Enhance visibility */
+      }
+  
+    .announcement-container {
+      font-size: 14px; /* Further reduced font size */
+      padding: 5px; /* Compact padding */
+    }
+  
+    .announcement-item {
+      margin-bottom: 8px; /* Reduced spacing between items */
+    }
+  
+    .announcement-left {
+      font-size: 12px; /* Further reduced font size */
+    }
+  
+    .vertical-line {
+      width: 60%; /* Smaller line for tighter fit */
+      margin: 5px 0; /* Adjusted spacing */
+    }
+  
+    .announcement-title {
+      font-size: 14px; /* Further reduced title size */
+    }
+  
+    .announcement-footer p {
+      font-size: 12px; /* Adjusted footer font size */
+    }
+
+    .announcement-container .close-button {
+        z-index: 200; /* Ensure it’s higher than other elements */
+    }
+  }
