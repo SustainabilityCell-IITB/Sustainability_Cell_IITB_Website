@@ -38,9 +38,6 @@ const observer = new IntersectionObserver((entries) => {
 const hiddenElements = document.querySelectorAll('.hidden');
 hiddenElements.forEach((el) => observer.observe(el));
 
-
-
-
 //......................Hamburger js
 
 
@@ -81,6 +78,112 @@ eventText.forEach((el) => {
     });
 });
 
+// 'View All Notifications' button
+// Select elements
+const announcementButton = document.querySelector('.announcement-button button');
+const announcementSection = document.querySelector('.announcement-section');
+const closeButton = document.querySelector('.close-button');
+const viewAllNotifications = document.querySelector('.announcement-footer p');
+const announcementContainer = document.querySelector('.announcement-container');
+
+// Store the initial hardcoded announcements
+const initialAnnouncements = Array.from(document.querySelectorAll('.announcement-item'))
+    .filter(item => !item.classList.contains('announcement-footer'))
+    .map(item => item.outerHTML);
+
+// State to track whether announcements are loaded
+let announcementsLoaded = false;
+
+// Function to toggle announcement section visibility
+const toggleAnnouncementSection = () => {
+    announcementSection.classList.toggle('visible');
+};
+
+// Function to close the announcement section and reset to original format
+const closeAnnouncementSection = () => {
+    announcementSection.classList.remove('visible');
+    resetToOriginalAnnouncements();
+};
+
+// Function to reset announcements to the original state
+const resetToOriginalAnnouncements = () => {
+    // Clear all existing announcement items except the footer
+    const existingItems = announcementContainer.querySelectorAll('.announcement-item');
+    existingItems.forEach(item => item.remove());
+
+    // Add back all initial hardcoded announcements
+    initialAnnouncements.forEach(htmlString => {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlString;
+        const announcementItem = tempDiv.firstChild;
+        announcementContainer.insertBefore(announcementItem, announcementContainer.querySelector('.announcement-footer'));
+    });
+
+    // Reset the loaded state
+    announcementsLoaded = false;
+};
+
+// Function to fetch and display announcements
+// Remove 'time' from the fetched announcements
+const fetchAnnouncements = async () => {
+    if (announcementsLoaded) return; // Avoid duplicate loading
+
+    try {
+        const response = await fetch('announcements.json');
+        if (!response.ok) throw new Error('Failed to fetch announcements');
+
+        const announcements = await response.json();
+
+        // Clear existing announcements
+        const existingItems = announcementContainer.querySelectorAll('.announcement-item');
+        existingItems.forEach(item => item.remove());
+
+        // Add announcements from JSON (without time)
+        announcements.forEach(announcement => {
+            const announcementItem = document.createElement('div');
+            announcementItem.className = 'announcement-item';
+
+            const leftDiv = document.createElement('div');
+            leftDiv.className = 'announcement-left';
+            leftDiv.innerHTML = `<p>${announcement.date}</p>`; // Only include date
+
+            const verticalLine = document.createElement('div');
+            verticalLine.className = 'vertical-line';
+
+            const rightDiv = document.createElement('div');
+            rightDiv.className = 'announcement-right';
+            rightDiv.innerHTML = `<p class="announcement-title">${announcement.title}</p>
+                                  <p>${announcement.description}</p>`;
+
+            announcementItem.appendChild(leftDiv);
+            announcementItem.appendChild(verticalLine);
+            announcementItem.appendChild(rightDiv);
+
+            announcementContainer.insertBefore(announcementItem, announcementContainer.querySelector('.announcement-footer'));
+        });
+
+        announcementsLoaded = true;
+    } catch (error) {
+        console.error('Error loading announcements:', error);
+    }
+};
+
+// Event listeners
+announcementButton.addEventListener('click', toggleAnnouncementSection);
+closeButton.addEventListener('click', closeAnnouncementSection);
+viewAllNotifications.addEventListener('click', fetchAnnouncements);
+
+
+// Event listeners
+announcementButton.addEventListener('click', toggleAnnouncementSection);
+closeButton.addEventListener('click', closeAnnouncementSection);
+viewAllNotifications.addEventListener('click', fetchAnnouncements);
+
+
+// Event listeners
+announcementButton.addEventListener('click', toggleAnnouncementSection);
+closeButton.addEventListener('click', closeAnnouncementSection);
+viewAllNotifications.addEventListener('click', fetchAnnouncements);
 
 
 // ......Implementations Scroll JS
