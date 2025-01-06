@@ -171,6 +171,7 @@ body{
     flex-direction: column; /* Stack content vertically */
     overflow-y: auto;
     border-radius: 15px; /* Matches the parent section for uniformity */
+    overflow-x: hidden;
 }
 
 .announcement-container h2 {
@@ -212,9 +213,16 @@ body{
     cursor: pointer;
 }
 .announcement-container .close-button:hover{
-    background-color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
+    transform: scale(1.1); /* Optional: Add a slight zoom effect */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
+.announcement-container .close-button:hover img {
+    filter: invert(38%) sepia(63%) saturate(731%) hue-rotate(353deg) brightness(94%) contrast(98%); /* Example color: red */
+    transition: filter 0.3s ease; /* Smooth transition for the color change */
+}
+
 
 .announcement-container .close-button img{
     height: 20px;
