@@ -245,10 +245,11 @@ body{
 .announcement-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px; /* Space between announcements */
+    margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
-    width: 100%; /* Ensure consistent width */
+    width: 100%;
+    min-height: 50px; /* Ensure enough height for the vertical line */
 }
   
 .announcement-left,
@@ -257,27 +258,31 @@ body{
 }
   
 .announcement-left {
-    width: 20%; /* Occupy 25% of the total width */
+    width: 20%;
     text-align: center;
     font-family: 'poppins', sans-serif;
     font-size: 16px;
     font-weight: 500;
     color: #283E4F;
+    flex-shrink: 0; /* Prevent shrinking of the left container */
 }
-  
+
 .vertical-line {
     width: 2px;
-    height: 100%; /* Make it fully span the height of the content */
-    background-color: black; /* Ensure the color is visible */
-    margin: 0 10px; /* Add spacing around the line */
+    height: 100px; /* Match the height of the parent container */
+    background-color: black;
+    margin: 0 10px;
+    flex-shrink: 0; /* Ensure it doesn't shrink */
 }
 
 .announcement-right {
-    width: 80%; /* Occupy 75% of the total width */
+    width: 80%;
     font-family: 'poppins', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: #283E4F;
+    flex-grow: 1; /* Allow the right container to grow and fill space */
 }
   
 .announcement-title {
