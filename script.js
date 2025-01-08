@@ -79,111 +79,99 @@ eventText.forEach((el) => {
 });
 
 // 'View All Notifications' button
-// Select elements
-const announcementButton = document.querySelector('.announcement-button button');
-const announcementSection = document.querySelector('.announcement-section');
-const closeButton = document.querySelector('.close-button');
-const viewAllNotifications = document.querySelector('.announcement-footer p');
-const announcementContainer = document.querySelector('.announcement-container');
 
-// Store the initial hardcoded announcements
-const initialAnnouncements = Array.from(document.querySelectorAll('.announcement-item'))
-    .filter(item => !item.classList.contains('announcement-footer'))
-    .map(item => item.outerHTML);
+document.addEventListener("DOMContentLoaded", () => {
+    const announcementButton = document.querySelector('.announcement-button button');
+    const announcementSection = document.querySelector('.announcement-section');
+    const closeButton = document.querySelector('.close-button');
+    const viewAllNotifications = document.querySelector('.announcement-footer p');
+    const currentAnnouncementsContainer = document.querySelector("#announcement-items");
 
-// State to track whether announcements are loaded
-let announcementsLoaded = false;
+    let announcements = [];
+    let currentIndices = [0]; // Use [0] for "No New Announcements".
 
-// Function to toggle announcement section visibility
-const toggleAnnouncementSection = () => {
-    announcementSection.classList.toggle('visible');
-};
+    // Fetch announcements from JSON
+    fetch("announcements.json")
+        .then(response => response.json())
+        .then(data => {
+            announcements = data;
+            displayCurrentAnnouncements(); // Initially show current announcements
+        })
+        .catch(error => console.error("Error fetching announcements:", error));
 
-// Function to close the announcement section and reset to original format
-const closeAnnouncementSection = () => {
-    announcementSection.classList.remove('visible');
-    resetToOriginalAnnouncements();
-};
+    // Function to display current announcements
+    function displayCurrentAnnouncements() {
+        currentAnnouncementsContainer.innerHTML = ""; // Clear previous entries
 
-// Function to reset announcements to the original state
-const resetToOriginalAnnouncements = () => {
-    // Clear all existing announcement items except the footer
-    const existingItems = announcementContainer.querySelectorAll('.announcement-item');
-    existingItems.forEach(item => item.remove());
+        if (currentIndices.length === 0 || currentIndices.includes(0)) {
+            currentAnnouncementsContainer.innerHTML = `
+                <div class="announcement-item">
+                    <div class="announcement-right">
+                        <p class="announcement-title">No New Announcements</p>
+                    </div>
+                </div>
+            `;
+            return;
+        }
 
-    // Add back all initial hardcoded announcements
-    initialAnnouncements.forEach(htmlString => {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = htmlString;
-        const announcementItem = tempDiv.firstChild;
-        announcementContainer.insertBefore(announcementItem, announcementContainer.querySelector('.announcement-footer'));
-    });
-
-    // Reset the loaded state
-    announcementsLoaded = false;
-};
-
-// Function to fetch and display announcements
-// Remove 'time' from the fetched announcements
-const fetchAnnouncements = async () => {
-    if (announcementsLoaded) return; // Avoid duplicate loading
-
-    try {
-        const response = await fetch('announcements.json');
-        if (!response.ok) throw new Error('Failed to fetch announcements');
-
-        const announcements = await response.json();
-
-        // Clear existing announcements
-        const existingItems = announcementContainer.querySelectorAll('.announcement-item');
-        existingItems.forEach(item => item.remove());
-
-        // Add announcements from JSON (without time)
-        announcements.forEach(announcement => {
-            const announcementItem = document.createElement('div');
-            announcementItem.className = 'announcement-item';
-
-            const leftDiv = document.createElement('div');
-            leftDiv.className = 'announcement-left';
-            leftDiv.innerHTML = `<p>${announcement.date}</p>`; // Only include date
-
-            const verticalLine = document.createElement('div');
-            verticalLine.className = 'vertical-line';
-
-            const rightDiv = document.createElement('div');
-            rightDiv.className = 'announcement-right';
-            rightDiv.innerHTML = `<p class="announcement-title">${announcement.title}</p>
-                                  <p>${announcement.description}</p>`;
-
-            announcementItem.appendChild(leftDiv);
-            announcementItem.appendChild(verticalLine);
-            announcementItem.appendChild(rightDiv);
-
-            announcementContainer.insertBefore(announcementItem, announcementContainer.querySelector('.announcement-footer'));
+        currentIndices.forEach(index => {
+            const announcement = announcements.find(item => item.index === index);
+            if (announcement) {
+                const announcementHTML = createAnnouncementHTML(announcement);
+                currentAnnouncementsContainer.innerHTML += announcementHTML;
+            }
         });
-
-        announcementsLoaded = true;
-    } catch (error) {
-        console.error('Error loading announcements:', error);
     }
-};
 
-// Event listeners
-announcementButton.addEventListener('click', toggleAnnouncementSection);
-closeButton.addEventListener('click', closeAnnouncementSection);
-viewAllNotifications.addEventListener('click', fetchAnnouncements);
+    // Function to display all announcements
+    function displayAllAnnouncements() {
+        currentAnnouncementsContainer.innerHTML = ""; // Clear previous entries
+
+        announcements.forEach(announcement => {
+            const announcementHTML = createAnnouncementHTML(announcement);
+            currentAnnouncementsContainer.innerHTML += announcementHTML;
+        });
+    }
+
+    // Utility function to create announcement HTML
+    function createAnnouncementHTML({ date, title, description }) {
+        return `
+            <div class="announcement-item">
+                <div class="announcement-left">
+                    <p>${date}</p>
+                </div>
+                <div class="vertical-line"></div>
+                <div class="announcement-right">
+                    <p class="announcement-title">${title}</p>
+                    <p>${description}</p>
+                </div>
+            </div>
+        `;
+    }
+
+    // Function to toggle announcement section visibility
+    const toggleAnnouncementSection = () => {
+        if (!announcementSection.classList.contains("visible")) {
+            // When opening, reset to current announcements
+            displayCurrentAnnouncements();
+        }
+        announcementSection.classList.toggle("visible");
+    };
+
+    // Event listeners
+    announcementButton.addEventListener("click", toggleAnnouncementSection);
+    closeButton.addEventListener("click", () => {
+        announcementSection.classList.remove("visible");
+    });
+    viewAllNotifications.addEventListener("click", () => {
+        displayAllAnnouncements();
+    });
+});
 
 
-// Event listeners
-announcementButton.addEventListener('click', toggleAnnouncementSection);
-closeButton.addEventListener('click', closeAnnouncementSection);
-viewAllNotifications.addEventListener('click', fetchAnnouncements);
 
 
-// Event listeners
-announcementButton.addEventListener('click', toggleAnnouncementSection);
-closeButton.addEventListener('click', closeAnnouncementSection);
-viewAllNotifications.addEventListener('click', fetchAnnouncements);
+
 
 
 // ......Implementations Scroll JS
