@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentAnnouncementsContainer = document.querySelector("#announcement-items");
 
     let announcements = [];
-    let currentIndices = [0]; // Use [0] for "No New Announcements".
+    let currentIndices = [1]; // Use [0] for "No New Announcements".
 
     // Fetch announcements from JSON
     fetch("announcements.json")
