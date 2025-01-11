@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentAnnouncementsContainer = document.querySelector("#announcement-items");
 
     let announcements = [];
-    let currentIndices = [1,2]; // Use [0] for "No New Announcements".
+    let currentIndices = [0]; // Use [0] for "No New Announcements".
 
     // Fetch announcements from JSON
     fetch("announcements.json")
@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!announcementSection.classList.contains("visible")) {
             // When opening, reset to current announcements
             displayCurrentAnnouncements();
+            viewAllNotifications.style.display = "block"; // Reset the "View All Notifications" button
         }
         announcementSection.classList.toggle("visible");
     };
@@ -165,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     viewAllNotifications.addEventListener("click", () => {
         displayAllAnnouncements();
+        viewAllNotifications.style.display = "none";
     });
 });
 
